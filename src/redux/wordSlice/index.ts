@@ -9,6 +9,7 @@ export interface WordState {
   topRowIndex: number;
   isLastWord: boolean;
   isGameEnded: boolean;
+  currentWord: string;
 }
 
 const initialState: WordState = {
@@ -19,6 +20,7 @@ const initialState: WordState = {
   topRowIndex: 0,
   isLastWord: false,
   isGameEnded: false,
+  currentWord: "",
 };
 
 export const wordSlice = createSlice({
@@ -39,6 +41,7 @@ export const wordSlice = createSlice({
       }
 
       state.wordArr = tmp;
+      state.currentWord = tmp[0][0];
       state.topRowIndex = Math.max(0, state.currentRow - 2);
     },
     nextWord: (state) => {
@@ -53,6 +56,16 @@ export const wordSlice = createSlice({
       if (state.topRowIndex >= state.wordArr.length) {
         state.isLastWord = true;
         state.isGameEnded = true;
+      } else {
+        state.currentWord =
+          state.wordArr[state.currentRow][state.currentColumn];
+      }
+    },
+    checkWord: (state, action: PayloadAction<string>) => {
+      if (state.currentWord === action.payload) {
+        console.log("doğru");
+      } else {
+        console.log("yanlış");
       }
     },
     reset: (state) => {
@@ -61,6 +74,6 @@ export const wordSlice = createSlice({
   },
 });
 
-export const { defineWordArr, nextWord, reset } = wordSlice.actions;
+export const { defineWordArr, nextWord, checkWord, reset } = wordSlice.actions;
 
 export default wordSlice.reducer;

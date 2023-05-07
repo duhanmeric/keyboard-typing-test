@@ -1,10 +1,11 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 
 type Props = {
   placeholder: string;
   label: string;
   value: string;
   onChange: (value: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (value: KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const Input = (props: Props) => {
@@ -12,6 +13,7 @@ const Input = (props: Props) => {
     <div className="form-floating w-100">
       <input
         onChange={props.onChange}
+        onKeyDown={props.onKeyDown}
         value={props.value}
         type="email"
         className="form-control"
