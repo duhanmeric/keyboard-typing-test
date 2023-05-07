@@ -1,26 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export type CurrentWordType = {
+  word: string;
+  status: "none" | "correct" | "incorrect";
+};
+
 export interface WordState {
-  wordArr: string[][];
+  wordArr: { word: string; status: string }[][]; // status: 'correct', 'incorrect', 'none'
   wordPerLine: number;
   currentRow: number;
   currentColumn: number;
   topRowIndex: number;
   isLastWord: boolean;
   isGameEnded: boolean;
-  currentWord: string;
 }
 
 const initialState: WordState = {
-  wordArr: [[]],
+  wordArr: [[{ word: "", status: "none" }]],
   wordPerLine: 10,
   currentRow: 0,
   currentColumn: 0,
   topRowIndex: 0,
   isLastWord: false,
   isGameEnded: false,
-  currentWord: "",
 };
 
 export const wordSlice = createSlice({
@@ -36,12 +39,14 @@ export const wordSlice = createSlice({
 
       const tmp = [];
       for (let i = 0; i < _wordsArr.length; i += state.wordPerLine) {
-        const row = _wordsArr.slice(i, i + state.wordPerLine);
+        const row = _wordsArr
+          .slice(i, i + state.wordPerLine)
+          .map((word) => ({ word, status: "none" } as CurrentWordType)); // Update this line
+
         tmp.push(row);
       }
 
       state.wordArr = tmp;
-      state.currentWord = tmp[0][0];
       state.topRowIndex = Math.max(0, state.currentRow - 2);
     },
     nextWord: (state) => {
@@ -56,16 +61,17 @@ export const wordSlice = createSlice({
       if (state.topRowIndex >= state.wordArr.length) {
         state.isLastWord = true;
         state.isGameEnded = true;
-      } else {
-        state.currentWord =
-          state.wordArr[state.currentRow][state.currentColumn];
       }
     },
     checkWord: (state, action: PayloadAction<string>) => {
-      if (state.currentWord === action.payload) {
-        console.log("doğru");
+      const currentWordItem = state.wordArr[state.currentRow][
+        state.currentColumn
+      ] as CurrentWordType;
+
+      if (currentWordItem.word === action.payload) {
+        currentWordItem.status = "correct";
       } else {
-        console.log("yanlış");
+        currentWordItem.status = "incorrect";
       }
     },
     reset: (state) => {

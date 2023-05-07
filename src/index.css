@@ -27,6 +27,14 @@ body,
   white-space: nowrap;
 }
 
+.word.correct {
+  color: green;
+}
+
+.word.incorrect {
+  color: red;
+}
+
 .word.current {
   background-color: rgb(223, 223, 223);
 }
