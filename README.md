@@ -1,0 +1,6 @@
+- [ ] score eklenecek
+  - doğru bilinen kelime sayısı
+  - yanlış bilinen kelime sayısı
+  - asıl typing skor
+- [ ] tam game süresi 1 dk olacak, start butonunun oraya sayaç koy
+- [ ] ...
