@@ -18,12 +18,15 @@ export const gameSlice = createSlice({
         state.gameState = "started";
       }
     },
-    reset: (state) => {
-      Object.assign(state, initialState);
+    finishGame: (state) => {
+      state.gameState = "ended";
+    },
+    resetGame: (state) => {
+      state.gameState = "idle";
     },
   },
 });
 
-export const { reset, startGame } = gameSlice.actions;
+export const { startGame, finishGame, resetGame } = gameSlice.actions;
 
 export default gameSlice.reducer;

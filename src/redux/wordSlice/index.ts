@@ -7,7 +7,7 @@ export type CurrentWordType = {
 };
 
 export interface WordState {
-  wordArr: { word: string; status: string }[][]; // status: 'correct', 'incorrect', 'none'
+  wordArr: { word: string; status: string }[][];
   wordPerLine: number;
   currentRow: number;
   currentColumn: number;
@@ -64,8 +64,6 @@ export const wordSlice = createSlice({
 
       if (state.topRowIndex >= state.wordArr.length) {
         state.isLastWord = true;
-        //state.gameState = "ended";
-        // diğer slice'ta ended'a çevir
       }
     },
     checkWord: (state, action: PayloadAction<string>) => {
@@ -81,9 +79,13 @@ export const wordSlice = createSlice({
         state.wrongWords += 1;
       }
     },
+    resetWordStat: (state) => {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { defineWordArr, nextWord, checkWord } = wordSlice.actions;
+export const { defineWordArr, nextWord, checkWord, resetWordStat } =
+  wordSlice.actions;
 
 export default wordSlice.reducer;

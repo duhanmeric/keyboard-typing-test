@@ -4,6 +4,7 @@ type Props = {
   placeholder: string;
   label: string;
   value: string;
+  isDisabled: boolean;
   onChange: (value: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (value: KeyboardEvent<HTMLInputElement>) => void;
 };
@@ -12,6 +13,7 @@ const Input = (props: Props) => {
   return (
     <div className="form-floating w-100">
       <input
+        disabled={props.isDisabled}
         onChange={props.onChange}
         onKeyDown={props.onKeyDown}
         value={props.value}

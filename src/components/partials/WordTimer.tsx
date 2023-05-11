@@ -1,18 +1,29 @@
-import { useAppSelector } from "@/redux/hooks";
+import { finishGame } from "@/redux/gameSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
 
 const WordTimer = () => {
   const { correctWords } = useAppSelector((state) => state.words);
   const { gameState } = useAppSelector((state) => state.game);
 
-  const [timeElapsed, setTimeElapsed] = useState(60);
+  const dispatch = useAppDispatch();
+
+  const [timeElapsed, setTimeElapsed] = useState(3);
 
   useEffect(() => {
     let timerId: ReturnType<typeof setInterval> | null = null;
 
-    if (timeElapsed > 0 && gameState === "started") {
+    if (gameState === "started") {
       timerId = setInterval(() => {
-        setTimeElapsed((prevTimeElapsed) => prevTimeElapsed - 1);
+        setTimeElapsed((prevTimeElapsed) => {
+          if (prevTimeElapsed <= 0 && timerId) {
+            clearInterval(timerId);
+            timerId = null;
+            return 0;
+          } else {
+            return prevTimeElapsed - 1;
+          }
+        });
       }, 1000);
     }
 
@@ -21,7 +32,14 @@ const WordTimer = () => {
         clearInterval(timerId);
       }
     };
-  }, [timeElapsed, gameState]);
+  }, [gameState, dispatch]);
+
+  useEffect(() => {
+    if (timeElapsed === 0) {
+      setTimeElapsed(60);
+      dispatch(finishGame());
+    }
+  }, [timeElapsed, dispatch]);
 
   const totalTime = 60;
   const wpm = correctWords / ((totalTime - timeElapsed) / 60);

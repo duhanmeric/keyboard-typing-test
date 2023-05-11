@@ -29,6 +29,7 @@ const InputArea = () => {
       <div className="d-flex justify-content-between align-items-center">
         <div className="input-container">
           <Input
+            isDisabled={gameState !== "started"}
             onChange={(e) => handleTypedWord(e.target.value)}
             value={typedWord}
             label="Enter word"

@@ -16,6 +16,10 @@ function App() {
     dispatch(defineWordArr(_wordArr));
   }, [isGameEnded, dispatch]);
 
+  useEffect(() => {
+    console.log(gameState);
+  }, [gameState]);
+
   return (
     <div className="app">
       <div className="container-lg py-5">
