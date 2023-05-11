@@ -1,14 +1,14 @@
-import { reset } from "@/redux/wordSlice";
+import { reset } from "@/redux/gameSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Cart, Button, WordList } from "..";
 
 const WordListArea = () => {
-  const { isGameEnded } = useAppSelector((state) => state.words);
+  const { gameState } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
 
   return (
     <Cart>
-      {isGameEnded ? (
+      {gameState === "ended" ? (
         <div>
           <div className="text-center fs-4 fw-semibold">
             Congrats! 🎉 Your score is: "Amazing!"

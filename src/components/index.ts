@@ -6,3 +6,4 @@ export { default as Button } from "./app-components/Button";
 export { default as WordListArea } from "./partials/WordListArea";
 export { default as InputArea } from "./partials/InputArea";
 export { default as CheatArea } from "./partials/CheatArea";
+export { default as WordTimer } from "./partials/WordTimer";

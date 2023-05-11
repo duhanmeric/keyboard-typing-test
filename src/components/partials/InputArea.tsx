@@ -2,9 +2,12 @@ import { KeyboardEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { checkWord, nextWord } from "@/redux/wordSlice";
 import { Cart, Input, Button } from "..";
+import { startGame } from "@/redux/gameSlice";
 
 const InputArea = () => {
-  const { isLastWord, isGameEnded } = useAppSelector((state) => state.words);
+  const { isLastWord } = useAppSelector((state) => state.words);
+  const { gameState } = useAppSelector((state) => state.game);
+
   const dispatch = useAppDispatch();
   const [typedWord, setTypedWord] = useState("");
 
@@ -35,9 +38,9 @@ const InputArea = () => {
         </div>
         <div className="button-container">
           <Button
-            isDisabled={isGameEnded || isLastWord}
+            isDisabled={gameState === "ended" || isLastWord}
             title="Start"
-            onClick={() => null}
+            onClick={() => dispatch(startGame())}
           />
         </div>
       </div>

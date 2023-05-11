@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Button } from "..";
 
 const CheatArea = () => {
-  const { isLastWord, isGameEnded } = useAppSelector((state) => state.words);
+  const { isLastWord, gameState } = useAppSelector((state) => state.words);
   const dispatch = useAppDispatch();
 
   return (
@@ -11,7 +11,7 @@ const CheatArea = () => {
       <h6 className="mt-4">Cheats: </h6>
       <div className="button-container mt-3">
         <Button
-          isDisabled={isGameEnded || isLastWord}
+          isDisabled={gameState === "ended" || isLastWord}
           title="Next Word (cheat)"
           onClick={() => dispatch(nextWord())}
         />

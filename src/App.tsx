@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { defineWordArr } from "@/redux/wordSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { CheatArea, InputArea, WordListArea } from "@/components";
+import { CheatArea, InputArea, WordListArea, WordTimer } from "@/components";
 
 function App() {
-  const { isGameEnded, correctWords, wrongWords } = useAppSelector(
-    (state) => state.words
-  );
+  const { correctWords, wrongWords } = useAppSelector((state) => state.words);
+  const { gameState } = useAppSelector((state) => state.game);
+
+  const isGameEnded = gameState === "ended";
 
   const dispatch = useAppDispatch();
 
@@ -24,6 +25,7 @@ function App() {
           </h6>
           <div>correct: {correctWords}</div>
           <div>wrong: {wrongWords}</div>
+          <WordTimer />
           <WordListArea />
         </div>
         <div className="app-container mt-4">

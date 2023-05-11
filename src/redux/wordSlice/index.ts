@@ -64,7 +64,8 @@ export const wordSlice = createSlice({
 
       if (state.topRowIndex >= state.wordArr.length) {
         state.isLastWord = true;
-        state.isGameEnded = true;
+        //state.gameState = "ended";
+        // diğer slice'ta ended'a çevir
       }
     },
     checkWord: (state, action: PayloadAction<string>) => {
@@ -80,12 +81,9 @@ export const wordSlice = createSlice({
         state.wrongWords += 1;
       }
     },
-    reset: (state) => {
-      Object.assign(state, initialState);
-    },
   },
 });
 
-export const { defineWordArr, nextWord, checkWord, reset } = wordSlice.actions;
+export const { defineWordArr, nextWord, checkWord } = wordSlice.actions;
 
 export default wordSlice.reducer;
