@@ -4,7 +4,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { CheatArea, InputArea, WordListArea } from "@/components";
 
 function App() {
-  const { isGameEnded } = useAppSelector((state) => state.words);
+  const { isGameEnded, correctWords, wrongWords } = useAppSelector(
+    (state) => state.words
+  );
 
   const dispatch = useAppDispatch();
 
@@ -20,6 +22,8 @@ function App() {
           <h6 className="app-title fw-bold fs-5 text-center mb-4">
             keyboard speed test app
           </h6>
+          <div>correct: {correctWords}</div>
+          <div>wrong: {wrongWords}</div>
           <WordListArea />
         </div>
         <div className="app-container mt-4">

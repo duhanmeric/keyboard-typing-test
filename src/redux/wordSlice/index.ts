@@ -14,6 +14,8 @@ export interface WordState {
   topRowIndex: number;
   isLastWord: boolean;
   isGameEnded: boolean;
+  correctWords: number;
+  wrongWords: number;
 }
 
 const initialState: WordState = {
@@ -24,6 +26,8 @@ const initialState: WordState = {
   topRowIndex: 0,
   isLastWord: false,
   isGameEnded: false,
+  correctWords: 0,
+  wrongWords: 0,
 };
 
 export const wordSlice = createSlice({
@@ -70,8 +74,10 @@ export const wordSlice = createSlice({
 
       if (currentWordItem.word === action.payload) {
         currentWordItem.status = "correct";
+        state.correctWords += 1;
       } else {
         currentWordItem.status = "incorrect";
+        state.wrongWords += 1;
       }
     },
     reset: (state) => {
